@@ -1,1 +1,3 @@
 /BPI DATA Wave Hackathon Kit/Data
+src/secrets.toml
+src/.env
