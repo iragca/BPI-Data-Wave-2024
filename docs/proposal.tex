@@ -1,0 +1,338 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+% \usepackage[style=ieee, sorting=nyt, backend=biber]{biblatex}
+\usepackage[style=apa, sorting=nyt, backend=biber]{biblatex}
+\DeclareLanguageMapping{english}{english-apa}  % For English language documents
+\addbibresource{Exported Items.bib}  % your .bib file containing references
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+
+
+\definecolor{mycolor1}{HTML}{ba3132} 
+\hypersetup{
+    colorlinks=true,
+    linkcolor=mycolor1,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={BPI Data Wave},
+    citecolor=cyan
+}
+
+\urlstyle{same}
+
+
+\usepackage[margin=1in]{geometry}  %For centering solution box
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\normalsize\bfseries} % \bfseries makes the section title bold
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries} % Same size as body text
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries} % Same size as body text
+  {\thesubsubsection}{1em}{}
+
+% \chead{\hline} % Un-comment to draw line below header
+
+% \thispagestyle{empty}   %For removing header/footer from page 1
+
+\parindent 0cm
+
+% \title{\vspace{0cm} % Move title up a bit
+%     \hrule height 1.5mm % Top thick line
+%     \vspace{1cm}
+%     \textbf{\LARGE FIRM: An Intelligent Conversational Agent for Tailored Financial Advisory Solutions}
+%     \vspace{1cm}
+%     \hrule height 0.5mm % Bottom thin line
+% }
+
+% \author{
+%     \text{Chris Andrei Irag} \hspace{0.5cm}
+%     \text{Frency Rayne Montesclaros} \vspace{0.2cm}  \\
+%     \text{Kein Jake Culanggo} \hspace{0.3cm}
+%     \text{Keith Laspoña} \vspace{0.3cm} \\    
+%     \centering University of Science and Technology of Southern Philippines
+% }
+
+\date{}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\includegraphics[width=15cm]{img.png} 
+
+\vspace{1cm} % Move title up a bit
+\hrule height 1.5mm % Top thick line
+\vspace{1cm}
+    \LARGE FiLEMon: Financial Literacy and Experience for Micro-Enterprise Owners and Novices
+    \vspace{1cm}
+    \hrule height 0.5mm % Bottom thin line
+
+\vspace{1cm}
+    \normalsize Chris Andrei Irag \hspace{0.5cm}
+    \normalsize Frency Rayne Montesclaros \vspace{0.2cm}  \\
+    \normalsize Kein Jake Culanggo \hspace{0.3cm}
+    \normalsize Keith Laspoña \vspace{0.3cm} \\    
+    \centering University of Science and Technology of Southern Philippines
+\vspace{0.5cm}
+\begin{abstract} 
+    \noindent 
+This assistive tool is designed for Micro-business in the Philippines, who have limited business experience, and little flexibility in managing their businesses. Financial Literacy and Experience for Micro-Enterprise Owners and Novices (FiLEMon) is a conversational chatbot that functions as a financial advisor and assistant. Implemented using LangChain and Retrieval-Augmented Generation (RAG) architecture, we developed a chatbot capable of determining the best course of action through reasoning. Being context-aware, equipped with tools, and possessing the ability to reason, the chatbot can remember significant information about its users and perform actions that align with their goals. This reasoning capability fosters adaptability in utilizing tools, enabling users to experience learning and assistance similar to that of a human assistant, acting as an agent that strives to better understand the user. The chatbot educates users on financial concepts and opportunities they may not know and provides support for managing their businesses, empowering Micro-business owners to achieve more and improve both their business and personal development.
+
+\end{abstract}
+\vspace{0.5cm}
+
+\textbf{Keywords:} MSMEs, Micro-businesses, Finance, Business, Generative AI, Philippines
+
+\end{titlepage}
+
+\section{Introduction}
+
+% \textbf{Micro, Small, and Medium Enterprises} \\
+% From 2015 to 2022, Micro, Small, and Medium Enterprises (MSMEs) have consistently accounted for 99.6\% of the total number of businesses in the Philippines \parencite{department_of_trade_and_industry_philippines_msme_2022, ibarra_accounting_2015} and contribute to 40\% of the GDP \parencite{united_nations_development_program_msme_2020}, of which 90.49\% are considered Micro enterprises. MSMEs stimulate the economy by generating 65.10\% jobs of the Philippine's total employment. 76\% of MSMEs operate in the following industries: (1) wholesale and retail trade; motor vehicle repair, (2) accommodation and food services, (3) financial and insurance industries, and (4) manufacturing \parencite{philippine_statistics_authority_2018_2018}. \\
+
+
+From 2015 to 2022, Micro, Small, and Medium Enterprises (MSMEs) made up an impressive 99.6\% of all businesses in the Philippines \parencite{department_of_trade_and_industry_philippines_msme_2022, ibarra_accounting_2015}. These small businesses are vital to our economy, contributing around 40\% to the Gross Domestic Product (GDP) \parencite{united_nations_development_program_msme_2020}, and nearly 90.49\% of them fall into the micro category. They also play a big role in job creation, providing 65.10\% of all jobs in the country. A significant portion—76\%—of these businesses operate in key sectors like wholesale and retail trade, accommodation and food services, financial and insurance industries, and manufacturing \parencite{philippine_statistics_authority_2018_2018}. \\
+
+However, despite their importance, micro-businesses encounter several hurdles that can hinder their growth and sustainability. Many owners rely on informal sources of funding, such as personal savings or loans from family and friends, when starting out \parencite{almeda_micro_2012}. Even though they might know about formal financing options, they often stick to what feels safe. Additionally, while many micro-business owners have some basic financial knowledge, it’s usually not enough to tackle the complexities of running a business effectively \parencite{ibarra_accounting_2015}. It’s worth noting that 73\% of these owners have only completed Senior High School \parencite{rahmawati_analysis_2015}, which can limit their understanding of important financial concepts. \\
+Given these challenges, this project aims to provide tailored support that enhances financial literacy and streamlines operations for micro-business owners through accessible resources and tools designed specifically for their unique needs.
+
+
+
+
+
+% \begin{figure}[h!]
+% \centering
+%     \def\arraystretch{1.5}
+%         \begin{tabular}{|c||c|c|}
+%             \hline
+%             Enterprise Type & By Value (PHP) & By Number of Employees \\ \hline
+%             Micro & Up to ₱3,000,000 & 1 - 9 \\ \hline
+%             Small & ₱3,000,001 - ₱15,000,000 & 10 - 99 \\ \hline
+%             Medium & ₱15,000,001 - ₱100,000,000, & 100 - 199 \\
+%             \hline
+%         \end{tabular}
+%     \caption{MSME Classification}
+% \label{fig:MSME Classification}
+% \end{figure}
+
+% As shown in Fig. \ref{fig:MSME Classification}, the classification of MSMEs depend on either of the following criteria: (1) The enterprise's total asset value in Philippine Pesos (PHP)  not including where the land of which the particular enterprise is situated in \parencite{republic_of_the_philippines_magna_2008}; (2) The number of employees an enterprise currently employs \parencite{senate_economic_planning_office_msme_2012}.\\
+
+% Micro-enterprises face multiple challenges. They tend to rely on informal sources of business capital, such as personal savings and borrowing from relatives, when starting their business \parencite{almeda_micro_2012}, despite being aware of formal financing options and possessing a decent level of financial knowledge \parencite{ibarra_accounting_2015}. 73\% of Micro-enterprises have 'Senior High' as their highest educational attainment \parencite{rahmawati_analysis_2015}.
+
+% This is largely due to the unfavorable business environment, which affects the entry, survival, and growth of MSMEs, with economic factors such as limited access to formal financing options, inflation, and high taxes playing significant roles \parencite{duran_common_2024, senate_economic_planning_office_msme_2012}. \\ 
+
+
+% \textbf{Innovation in MSMEs} \\
+% Despite the existing unfavorable business environment, research highlights the importance of innovation and the adoption of technologies like AI to improve productivity \parencite{duran_common_2024}. As mentioned before, limited access to formal financing options hampers business growth, it has also been shown that this challenge correlates with SMEs' incentive to innovate and adopt productivity-enhancing technologies \parencite{lim_innovation_2022}. In contrast, Micro enterprises often maintain a mindset of contentment with their current business and see little need to innovate, improve, or graduate to the small or higher enterprise category. Contributing factors to this mindset include, but are not limited to: (a) low skill levels, (b) limited education, (c) confidence in their niche product but lack of knowledge about the broader market, and (d) the ease of entry and exit in the market \parencite{rahmawati_analysis_2015}.\\ 
+
+
+
+% \textbf{Generative AI} \\
+% Generative AI currently produces content such as text and images, and it is also capable of generating videos from images. The use of generative AI in audio production is gaining traction, with applications ranging from creating humorous music to general content creation \parencite{dong_generative_2024, chui_generative_2022}. In the business sector, the rise of generative AI has led to significant improvements in areas such as customer support, risk management, legal processes, marketing, sales, general assistance, IT/engineering, and human-robot interactions, with tools like ChatGPT garnering the most attention \parencite{chui_generative_2022, brynjolfsson_generative_2023}. So far, most business applications of Generative AI have focused on documentation and question-and-answer systems. \\
+
+% Outside of generative AI, solutions like machine learning dominate fields that involve numerical data. These technologies are used in prediction models such as forecasting, dynamic pricing, anomaly or fraud detection, recommendation systems, and general decision-making. It doesn't stop there, applications of Artificial Intelligence is multi-faceted, and the field is full innovation and will likely stay that way for quite some time \parencite{bharadiya_machine_2023, kaggwa_ai_2024, oyekunle_digital_2024}.
+
+
+\subsection{Problem Statement}
+% Micro business future and present owners have low financial literacy, low skills, and limited education. Nevertheless, they want to start or keep a business. We intend to fix that by using our proposed solution, Financial Intelligence and Resources for Micro-businesses (FIRM) chatbot, so that we can empower those business owners, not just by giving them financial recommendations but also by helping build their character by exposing them to varying learning channels to improve their financial literacy and attitude towards their own business.
+
+Micro-enterprises (MEs) are vital to economic development and job creation. However, many aspiring micro-enterprise owners across various sectors lack formal education and relevant business knowledge, with 73\% holding only a Senior High degree or below \parencite{rahmawati_analysis_2015}. This educational gap often leaves them feeling unprepared and overwhelmed when considering how to start and manage a business. \\
+
+These aspiring entrepreneurs may not understand the crucial steps involved in launching their ventures, including identifying necessary capital, and supplies, and navigating legal requirements. Furthermore, the daily demands of life and work limit their ability to engage in comprehensive learning, leaving them without the foundational knowledge needed for successful business management. \\
+
+To address these challenges, we propose the Financial Literacy and Experience for Micro-Enterprise Owners Nurturing (FiLEMon) chatbot. This interactive tool aims to guide aspiring micro-enterprise owners through the process of establishing their businesses, providing tailored support and easy-to-understand resources. By empowering these individuals with the knowledge and tools necessary to turn their ideas into viable businesses, we aim to foster confidence and resilience in their entrepreneurial journey, making business ownership more achievable despite their educational background.
+
+
+
+\subsection{Our Solution Here}
+The proposed solution, \textbf{FiLEMON: Financial Literacy and Experience for Micro-enterprise Owners and Novices}, is an interactive app equipped with a chatbot designed to assist aspiring micro-enterprise owners, particularly those who may feel unprepared or lack formal education in business management. \\
+
+\textbf{FiLEMON} is inspired by Pilemon from the Cebuano folk song "Si Pilemon," which reflects the life of a fisherman and embodies the harsh realities faced by micro-enterprise owners. \\
+
+This app addresses the high failure rates of small businesses due to limited knowledge and resources. By making the journey of starting and managing a business feel less overwhelming and more achievable, it empowers users to overcome common challenges and fosters their entrepreneurial spirit.\\
+
+\textbf{Business Information Setup} – The chatbot begins by gently guiding users to share their interests in starting a business. It first checks whether the user currently owns a business or is planning to start one. For existing business owners, the chatbot collects information about business types and key financial data, such as sales and expenses. For new entrepreneurs, it inquires about their desired business type and provides step-by-step instructions on establishing their venture.\\
+
+\textbf{Step-by-step Business Guidance} – Once the user's business information is established, the chatbot offers structured guidance on launching and running their venture. This includes practical insights into understanding necessary capital, supplies, and workforce needs. For instance, the chatbot can help users calculate their potential profit margins by analyzing their costs versus expected sales, enabling them to make informed pricing decisions.\\
+
+\textbf{Educational Components} – While the app does not focus on formal education, it encourages users to educate themselves by providing access to curated learning materials relevant to their pursued ventures. The chatbot distills complex information into concise summaries, making it easier for users to grasp essential concepts and apply them effectively.\\
+
+\textbf{Learning Recommendations} – Users receive tailored suggestions based on their interests, promoting continuous self-improvement related to their business endeavors.\\
+
+\textbf{Dynamic Data Recording} – As users engage with the chatbot, essential information about their business aspirations is recorded securely. To ensure accuracy, the chatbot confirms updates by verifying information with users, allowing for personalized support.\\
+
+\textbf{Progress Tracking Dashboard} – The app features a simplified dashboard designed for micro-business owners, especially those with little to no formal education. This intuitive interface allows users to monitor their business progress and achieve key performance indicators (KPIs). By providing insights into profit margins and other critical metrics, the dashboard empowers users to set achievable goals and actively track their entrepreneurial journey.\\
+
+
+\textbf{Key Features}
+    \begin{enumerate}[label=(\alph*)]
+    
+       \item \textbf{Personalized Financial Insights:} 
+        The chatbot delivers financial advice uniquely customized to each micro-enterprise’s circumstances, ensuring the insights provided are relevant to their specific needs. It simplifies complex financial concepts to accommodate users with limited financial knowledge, empowering them to make informed decisions. 
+
+       
+       \item \textbf{Memory and Interaction Continuity:} The system tracks and stores all previous interactions, allowing the chatbot to recall past conversations. This enables the chatbot to offer informed recommendations based on the business’s history and performance, ensuring continuity in guidance and a personalized experience for each user. 
+
+    
+       \item \textbf{Progress Monitoring with Dashboard:} The chatbot features a clear, intuitive dashboard where users can monitor key performance indicators, such as daily sales, debt levels, and account balances. The inclusion of time-series charts makes it easy for micro-business owners to track trends and understand their business's financial health at a glance. 
+    
+       \item \textbf{Adaptability Through Dynamic Data Recording: } Unlike static solutions, the chatbot continuously learns from user interactions, adapting its recommendations based on evolving business conditions. This flexibility ensures the system can grow with the business, providing updated and relevant advice as circumstances change.
+       
+      \item \textbf{Accessible Interface Design:} The user interface is crafted with simplicity in mind, making it easy to navigate for micro-entrepreneurs with limited technical or financial expertise. This accessibility helps users focus on managing their businesses without being hindered by complex software or jargon.
+      
+      \item \textbf{Contextual Awareness via ReAct Framework:} The Program-Aided Language (PAL) framework ensures that the chatbot can adapt to the conversational context, improving the relevance and clarity of responses. This capability enhances user interaction by making the chatbot more intuitive and efficient in addressing financial concerns \parencite{yao_react_2023}.
+
+      \item \textbf{Continuous Improvement Based on Feedback:} The chatbot evolves through user feedback and ongoing data collection, refining its functionality to meet the changing needs of micro-enterprises. This continuous improvement ensures that the system remains effective and user-friendly as businesses grow. 
+
+      
+      \item \textbf{Cost-Effective Alternative to Financial Consulting:} For micro-entrepreneurs who may not have the budget for professional financial consultants, the chatbot offers a more affordable solution. By providing personalized financial insights at a fraction of the cost, the tool helps aspiring business owners proceed with confidence, without the need for expensive advisory services.
+
+    \end{enumerate}
+
+    The FiLEMON chatbot is not merely a financial tool; it serves as a lifeline for aspiring micro-enterprise owners across various industries. By addressing barriers to knowledge and access to resources, it equips users with the skills and insights necessary to thrive in a competitive landscape. The combination of personalized support, tailored financial insights, and an intuitive interface significantly reduces the risk of failure, fostering sustainable business growth and empowering micro-enterprises to manage their financial operations effectively.
+
+
+\section{Implementation Plan}
+Upon opening the app, users are greeted with a warm welcome and presented with a questionnaire about themselves and their business. If they do not yet have a business, a different set of questions is provided to gather relevant information. To enhance the user experience and ensure that all data is securely saved across devices, registration is required. This not only allows users to save their progress but also enables FiLEMON to offer a more personalized and exclusive experience tailored to individual needs. Users can start with a free one-month trial, after which a subscription will be necessary to access premium features and ongoing support.
+
+\subsection{Target Audience}
+
+The primary target audience for this solution is micro-business owners across various sectors in the Philippines, including small-scale ventures, pop-up businesses, and independent vendors. These entrepreneurs often face significant economic challenges, as they are highly vulnerable to fluctuations in macroeconomic conditions. Limited access to formal financial services, such as loans, makes it difficult for them to manage their businesses effectively.\\
+
+In addition to financial barriers, these micro-business owners often struggle with cash flow management and lack managerial support, which can further hinder their ability to grow and sustain their businesses. This combination of limited resources and vulnerability highlights the need for solutions that provide not only financial assistance but also guidance in improving their overall business management.
+
+
+% \begin{enumerate}[label=(\alph*)]
+%     \item \textbf{Profile Type:} Micro-business owner 
+%     \item \textbf{Industry:} Food sector (micro food ventures, pop-up food stalls, independent food vendors) 
+%     \item \textbf{Location:} Philippines 
+%     \item \textbf{Economic Vulnerability:} Highly susceptible to volatile macroeconomic changes
+%     \item \textbf{Access to Financial Services:} Limited access to formal financial options (e.g., loans) 
+%     \item \textbf{Additional Characteristics:} (e.g., facing challenges in managing cash flow, lack of managerial support, etc.)
+% \end{enumerate}
+
+
+\subsection{Key Metrics for Success}
+There are factors that were considered and will be used to assess the success of the chatbot project: user engagement, data collection methods, and social outcomes. These factors will examine how successfully the chatbot helps micro-enterprise owners improve their financial literacy, business performance, and contribution to the community. Key performance indicators for the three factors are provided below. We explicitly disclose the measures we will use to evaluate the chatbot’s impact. \\
+
+For \textbf{user engagement}, success will be measured by tracking the number of active MSMEs business owners, repeat usage, session length, and user satisfaction. High repeat usage and consistent use will indicate that micro-business owners find value in the chatbot. Additionally, user satisfaction measured through feedback and surveys will help assess engagement. Metrics such as:
+\begin{enumerate}[label=(\alph*)]
+    
+    \item \textbf{Active MSMEs business owners:} The total number of distinct business owners who interact with the chatbot.
+    
+    \item \textbf{Repeat usage of the chatbot:} the percentage of users who interact with the chatbot multiple times.
+    
+    \item \textbf{User Satisfaction:} We will measure user satisfaction through structured feedback mechanisms, such as surveys and in-app ratings. This will help assess how effectively the chatbot addresses user needs in terms of usability, relevance, and overall effectiveness in providing financial advice.
+    
+    \item \textbf{User Impact Feedback:} In addition to satisfaction ratings, we will gather qualitative feedback on the perceived usefulness of the chatbot. This feedback will focus on how well the chatbot has influenced users’ financial decision-making and business growth.
+    
+\end{enumerate}
+
+To effectively assess the key performance indicators (KPIs) in real time, we will utilize a combination of data collection methods:
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{In-app feedback} - prompts will be employed to encourage users to provide immediate insights after each interaction, allowing us to gather ongoing input on their experiences.
+    
+    \item \textbf{Periodic surveys} - conducted at regular intervals, such as quarterly, to evaluate user satisfaction, collect qualitative feedback, and identify areas for improvement.
+    
+    \item \textbf{Integrated analytics dashboard} - will track important metrics, including active users, session length, and repeat usage automatically, enabling real-time monitoring and analysis. This multi-faceted approach will ensure a comprehensive understanding of user engagement and help us refine the chatbot’s functionality to better meet the needs of micro-business owners.
+\end{enumerate}
+
+Regarding \textbf{financial impact}, metrics will focus on how the chatbot improves business performance. These include increased revenue, reduced cost,  profitability improvements, debt management including the ability to manage debt effectively, and the adoption of best practices. Additionally, the chatbot’s influence on cash flow stability and cost savings will be tracked to ensure it provides actionable, beneficial insights. Some key financial metrics include:
+
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{Increased revenue:} The percentage increase in revenue among micro-business owners who use the chatbot compared to those who don't.
+    \item \textbf{Reduced cost:} The percentage decreased in operational costs among micro-business owners.
+    \item \textbf{Profitability improvement} Changes in net profit margins of micro-business owners.
+    \item \textbf{Debt/Loan management:} Reduction or stabilization of debt/loan levels. 
+    \item \textbf{Adoption of Best Practices:} The percentage increase in the adoption of recommended financial practices among micro-business owners who use the chatbot.
+\end{enumerate}
+
+Finally, the \textbf{social outcomes} will be assessed by looking at community impact, inclusivity, user confidence, community engagement, and business sustainability. This includes tracking the percentage of underserved groups using the chatbot and measuring users' self-reported improvements in financial confidence and decision-making. Key social metrics are:
+\begin{enumerate}[label=(\alph*)]
+
+\item \textbf{Community Impact:} The number of micro-business owners who report positive impacts on their local communities due to using the chatbot, such as job creation or increased community involvement.
+\item \textbf{Inclusivity:} Percentage of users from underserved groups low-income entrepreneurs and start-up business owners.
+\item \textbf{User confidence:} Improvements in self-reported confidence in financial decision-making
+\item \textbf{Business Sustainability:} The percentage increase in the long-term sustainability of micro-business owners who use the chatbot.
+\end{enumerate}
+
+
+
+\section{Technology Stack}
+\subsection{Python}
+Our prototype will be written using Python and its ecosystem.
+
+\subsection{Streamlit}
+This open-source Python framework will be used for providing fast deployment of a functional web-based user interface.
+
+\subsection{LangChain framework and RAG architecture}
+Combining both LangChain and RAG architecture will enable us to interleave multiple LLMs as well as facilitate the chaining of different implementations of accessing real-time information using APIs, document retrieval, and augmented generation or prompt engineering. LangChain can orchestrate LLMS for statistical ‘reasoning’ and use that reasoning functionality to choose the best course of action that aligns best with the user’s objective \parencite{yao_react_2023}.
+
+\subsection{Cloud Databases}
+Redis - This NoSQL database will be used for storing vectors. \\
+PostgreSQL - This database will mostly store explicit financial literature documents the agent(s) can choose for retrieval to augment the input prompt.
+
+
+\section{Data Requirements}
+
+\begin{enumerate}[label=(\alph*)]
+    \item 
+        \textbf{Private Data}
+        \begin{enumerate}[label=\roman*.] % Sub-items labeled as 1., 2., etc.
+            \item \textbf{Personal User Data} The user will input the information concerning themselves, the data will be stored in some document in a secure personal database.
+            \item \textbf{Business Data:} The user will input the information concerning their business, the data will be stored in some document in a secure personal database.
+        \end{enumerate}
+
+    \item
+        \textbf{Public Data}
+        \begin{enumerate}[label=\roman*.] % Sub-items labeled as 1., 2., etc.
+            \item \textbf{Financial Literature:} A corpus of financial literature written by financial professionals (if available) will be stored in a cloud database.
+            \item \textbf{Local Bank Financing Opportunities:} This data will be utilized to recommend financing options offered by local banks to the user. This will be stored in a document in a cloud database.
+            \item \textbf{Large Language Models:} This prototype will use the paid OpenAI GPT-4.o Mini for LLM inference, which will delegate the burden of text-generation to OpenAI servers.
+            \item \textbf{Big Data:} Big Data can range from video metadata on YouTube, book reviews on goodreads, google searches, financial news, and even weather information. This data will be accessed using LangChain’s built-in API connectors.
+        \end{enumerate}
+\end{enumerate}
+
+\section{Challenges and Risks}
+% \begin{itemize}
+% \renewcommand\labelitemi{}
+%     \item \textbf{Data privacy} \vspace{0.1cm} \\ 
+%     Financial advisory solutions may involve handling sensitive user data, such as income, investments, and economic history. This raises concerns over how such data is collected, stored, and shared.
+%     \item \textbf{Hallucinations} \vspace{0.1cm} \\ 
+%     Generative AI models, like OpenAI's LLM, can generate inaccurate or irrelevant responses (hallucinations), especially in critical financial advice.
+%     \item \textbf{Cybersecurity} \vspace{0.1cm} \\
+%     As financial data is precious, the system becomes a cyber-attack target. Threats such as data breaches, unauthorized access, or phishing attempts could compromise user trust.
+%     \item \textbf{Algorithmic Bias} \vspace{0.1cm}\\
+%     The model may inadvertently provide biased financial advice, especially if training data lacks diversity or reflects historical biases in financial systems.
+%     \item \textbf{Ethics Boundaries} \vspace{0.1cm} \\
+%     Users must be fully aware of how their data will be used, processed, and stored. The designers must make sure no unfavorable ethical boundaries be crossed.
+% \end{itemize}
+
+    \textbf{Data privacy} \vspace{0.1cm} \\ 
+    Handling sensitive user data, including income, investments, and financial history, raises concerns regarding collecting, storing, and sharing such information. Implementing stringent security measures to protect user data and ensure compliance with data protection regulations is crucial. \\\\
+    \textbf{Hallucinations} \vspace{0.1cm} \\ 
+    Generative AI models, such as OpenAI's LLM, may produce inaccurate or irrelevant responses (hallucinations), particularly when providing critical financial advice. Monitoring and validating the chatbot's outputs are essential to mitigate this risk. \\\\
+    \textbf{Cybersecurity} \vspace{0.1cm} \\
+    Given the sensitive nature of financial data, the system is a potential target for cyberattacks. Risks include data breaches, unauthorized access, and phishing attempts, which could undermine user trust and the integrity of the chatbot. \\\\
+    \textbf{Algorithmic Bias} \vspace{0.1cm}\\
+    The model may inadvertently deliver biased financial advice, particularly if the training data lacks diversity or reflects existing biases within economic systems. Continuous evaluation of the model's outputs is necessary to identify and address any biases. \\\\
+    \textbf{Ethics Boundaries} \vspace{0.1cm} \\
+    Users must be fully informed about how their data will be used, processed, and stored. Clear communication regarding data handling practices and obtaining explicit consent is vital for building trust and ensuring user compliance. \\\\
+
+% \section{Conclusion}
+% This proposal fixes the problem statement. We formulated our solution by doing this. We believe this is good and the effects and consequences of this technology is does this thing.
+
+
+\printbibliography
+
+\end{document}
