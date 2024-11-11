@@ -19,8 +19,11 @@ def get_session_history(session_id: str) -> InMemoryChatMessageHistory:
 llm = ChatOpenAI(model="gpt-3.5-turbo-0125")
 user_query = st.chat_input(f"Ask FiLEMon")
 
-# chain = RunnableWithMessageHistory(llm, get_session_history)
-# chain.invoke(
-#     "Hi I'm Bob.",
-#     config={"configurable": {"session_id": "1"}},
-# )  # session_id determines thread
+chain = RunnableWithMessageHistory(llm, get_session_history)
+
+if user_query != None:
+    response = chain.invoke(
+    user_query,
+    config={"configurable": {"session_id": "1"}},
+)  # session_id determines thread
+
