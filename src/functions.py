@@ -1,5 +1,9 @@
-def display_chat_history(response_metadata=False, message_age=False):
-    for chat in st.session_state['OpenAI_history']:
+import json
+import streamlit as st
+import re
+
+def display_chat_history(history):
+    for chat in history:
 
         ## User profile image and name
         st.html(f"""
@@ -29,13 +33,27 @@ def display_chat_history(response_metadata=False, message_age=False):
         """)
 
 
-        ## Token Summary
-        if response_metadata:
-            st.html(f"""
-            <small style="opacity: 0.5;">"""
-                +f"Model: {model} <br>Prompt Tokens: {prompt_tokens} | Completion Tokens: {completion_tokens} | Total Tokens: {total_tokens} <br>Processing Time (seconds): {process_time:.2f}"
-            """</small>
-            """)
+        # ## Token Summary
+        # if response_metadata:
+        #     st.html(f"""
+        #     <small style="opacity: 0.5;">
+        #         # +f"Model: {model} <br>Prompt Tokens: {prompt_tokens} | Completion Tokens: {completion_tokens} | Total Tokens: {total_tokens} <br>Processing Time (seconds): {process_time:.2f}"
+        #     </small>
+        #     """)
 
         ## LLM Response
-        st.markdown(f"{chat[2].content}")
+        st.markdown(f"{chat[1]}")
+
+def parse_json(file_path):
+
+    with open(file_path, 'r') as json_file:
+        data = json.load(json_file)
+
+    def parse_list(tup):
+        return (tup[0][7:], tup[1][4:])
+
+    return list(map(lambda x: parse_list(x), data))
+
+def parse_memory(memory):
+    pattern = r'(Human:.*?)(?=\nAI:|$)\n(AI:.*?)(?=\nHuman:|$)'
+    return re.findall(pattern, memory)

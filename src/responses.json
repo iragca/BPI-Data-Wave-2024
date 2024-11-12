@@ -1,0 +1,18 @@
+[
+    [
+        "Human: Hello!",
+        "AI: Hello! How are you today?"
+    ],
+    [
+        "Human: Hello!",
+        "AI: Hello again! Did you have a good day so far?"
+    ],
+    [
+        "Human: Hello!",
+        "AI: Hello once more! Is there anything specific you'd like to talk about today?"
+    ],
+    [
+        "Human: Hello!",
+        "AI: Hello again! It seems like you're saying hello a lot. Is there something on your mind that you'd like to discuss?"
+    ]
+]
